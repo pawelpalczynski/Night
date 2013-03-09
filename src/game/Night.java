@@ -18,6 +18,7 @@ public class Night extends StateBasedGame{
 		AppGameContainer app;
 		app = new AppGameContainer(new Night());
 		app.setDisplayMode(1024, 768, false);
+		app.setVSync(true);
 		app.start();
 	}
 

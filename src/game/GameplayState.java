@@ -5,13 +5,20 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import component.ImageRenderComponent;
+
+import entity.Entity;
+import entity.Player;
 
 public class GameplayState extends BasicGameState{
 	
 	private final int stateID;
-	private Image player;
+	private Player player;
+	private Entity zombie;
 	
 	GameplayState(int stateID) {
 		this.stateID = stateID;
@@ -20,14 +27,18 @@ public class GameplayState extends BasicGameState{
 	@Override
 	public void init(GameContainer gc, StateBasedGame sb)
 			throws SlickException {
-		player = new Image("data/images/player.png");
+		player = new Player("player");
 		
+		zombie = new Entity("zombie");
+		zombie.addComponent(new ImageRenderComponent("image", new Image("data/images/zombie.png")));
+		zombie.setPosition(new Vector2f(500f, 600f));
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sb, Graphics g)
+	public void render(GameContainer gc, StateBasedGame sb, Graphics gr)
 			throws SlickException {
-		player.draw(100f, 100f);
+		player.render(gc, sb, gr);
+		zombie.render(gc, sb, gr);
 		
 	}
 
@@ -39,10 +50,8 @@ public class GameplayState extends BasicGameState{
 		if (input.isKeyPressed(Input.KEY_ESCAPE)){
 			gc.exit();
 		}
-		if (input.isKeyPressed(Input.KEY_W)){
-			
-		}
 		
+		player.update(gc, sb, delta);
 	}
 
 	@Override
