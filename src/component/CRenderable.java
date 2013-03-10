@@ -4,9 +4,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.state.StateBasedGame;
  
-public abstract class RenderComponent extends Component {
+public abstract class CRenderable extends Component {
      
-    public RenderComponent(String id)
+    public CRenderable(String id)
     {
     this.id = id;
     }

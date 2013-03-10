@@ -1,5 +1,7 @@
 package component;
 
+import message.Message;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -21,6 +23,8 @@ public abstract class Component {
     public Entity getOwnerEntity(){
     	return this.owner;
     }
+    
+    public abstract void readMessage(Message message);
  
     public abstract void update(GameContainer gc, StateBasedGame sb, int delta);
 }

@@ -1,8 +1,8 @@
 package entity;
 
-import component.DisposableComponent;
-import component.FlyStraightComponent;
-import component.PrimitiveRenderComponent;
+import component.CDisposable;
+import component.CFlyStraight;
+import component.CPrimitiveRender;
 
 public class Bullet extends Entity {
 
@@ -12,7 +12,7 @@ public class Bullet extends Entity {
 	public Bullet(String id){
 		super(id);
 
-		this.addComponent(new PrimitiveRenderComponent("render"));
+		this.addComponent(new CPrimitiveRender("render"));
 	}
 	
 	public Bullet(String id, float speed, float direction) {
@@ -21,9 +21,9 @@ public class Bullet extends Entity {
 		setSpeed(speed);
 		setDirection(direction);
 		
-		this.addComponent(new PrimitiveRenderComponent("render"));
-		this.addComponent(new FlyStraightComponent("flying", this.getDirection(), this.speed));
-		this.addComponent(new DisposableComponent("disposable"));
+		this.addComponent(new CPrimitiveRender("render"));
+		this.addComponent(new CFlyStraight("flying", this.getDirection(), this.speed));
+		this.addComponent(new CDisposable("disposable"));
 	}
 
 	public float getSpeed() {

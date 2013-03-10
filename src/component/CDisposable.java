@@ -1,12 +1,14 @@
 package component;
 
+import message.Message;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class DisposableComponent extends Component {
+public class CDisposable extends Component {
 	
-	public DisposableComponent(String id){
+	public CDisposable(String id){
 		this.id = id;
 	}
 
@@ -19,6 +21,12 @@ public class DisposableComponent extends Component {
 		if (position.x < 0 || position.x > width || position.y < 0 || position.y > height){
 			owner.destroy();
 		}
+	}
+
+	@Override
+	public void readMessage(Message message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

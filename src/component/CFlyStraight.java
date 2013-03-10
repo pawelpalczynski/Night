@@ -1,10 +1,12 @@
 package component;
 
+import message.Message;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class FlyStraightComponent extends Component{
+public class CFlyStraight extends Component{
 	
 	private float direction;
 	private float speed;
@@ -16,7 +18,7 @@ public class FlyStraightComponent extends Component{
 	 * @param speed
 	 */
 	
-	public FlyStraightComponent(String id, float direction, float speed){
+	public CFlyStraight(String id, float direction, float speed){
 		this.id = id;
 		this.direction = direction;
 		this.speed = speed;
@@ -30,6 +32,12 @@ public class FlyStraightComponent extends Component{
 		position.y -= this.speed*delta*Math.cos(Math.toRadians(this.direction));
 		
 		owner.setPosition(position);
+	}
+
+	@Override
+	public void readMessage(Message message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

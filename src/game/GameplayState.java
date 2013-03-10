@@ -21,24 +21,20 @@ public class GameplayState extends BasicGameState{
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sb)
-			throws SlickException {
-		
+	public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
 		EntityContainer.addEntity(new Player("player"));
 		EntityContainer.addEntity(new Zombie("zombie"));
 	}
 
 	@Override
-	public void render(GameContainer gc, StateBasedGame sb, Graphics gr)
-			throws SlickException {
+	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) throws SlickException {
 		for (Entity e : EntityContainer.getEntities()){
 			e.render(gc, sb, gr);
 		}
 	}
 
 	@Override
-	public void update(GameContainer gc, StateBasedGame sb, int delta)
-			throws SlickException {
+	public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
 		Input input = gc.getInput();
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)){

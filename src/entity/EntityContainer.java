@@ -3,6 +3,8 @@ package entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import message.Message;
+
 public class EntityContainer {
 	
 	private static List<Entity> entities = new ArrayList<Entity>();
@@ -22,7 +24,6 @@ public class EntityContainer {
 	
 	public static void destroyEntity(Entity e){
 		entitiesToDestroy.add(e);
-		System.out.println(e);
 	}
 	
 	public static void removeEntities(){
@@ -33,6 +34,12 @@ public class EntityContainer {
 	
 	public static List<Entity> getEntities(){
 		return entities;
+	}
+	
+	public static void sendMessage(Message message){
+		for (Entity e : getEntities()){
+			e.sendMessage(message);
+		}
 	}
 	
 }

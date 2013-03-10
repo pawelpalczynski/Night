@@ -2,23 +2,28 @@ package entity;
 
 import java.util.ArrayList;
 
+import message.Message;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
  
 import component.Component;
-import component.RenderComponent;
+import component.CRenderable;
  
 public class Entity {
      
     String id;
      
     Vector2f position;
-    float scale;
+    Vector2f velocity;
+    int width;
+	int height;
+	float scale;
     float rotation;
  
-    RenderComponent renderComponent = null;
+    CRenderable renderComponent = null;
      
     ArrayList<Component> components = null;
      
@@ -26,15 +31,17 @@ public class Entity {
         this.id = id;
          
         components = new ArrayList<Component>();
-         
-        position = new Vector2f(0,0);
+        width = 10;
+        height = 10;
+        position = new Vector2f(0, 0);
+        velocity = new Vector2f(0, 0);
         scale = 1;
         rotation = 0;
     }
  
     public void addComponent(Component component) {
-        if(RenderComponent.class.isInstance(component)){
-            renderComponent = (RenderComponent)component;
+        if(CRenderable.class.isInstance(component)){
+            renderComponent = (CRenderable)component;
         }
         component.setOwnerEntity(this);
         components.add(component);
@@ -46,6 +53,12 @@ public class Entity {
         		return comp;
         }
         return null;
+    }
+    
+    public void sendMessage(Message message){
+    	for (Component comp : components){
+    		comp.readMessage(message);
+    	}
     }
  
     public Vector2f getPosition() {
@@ -75,6 +88,22 @@ public class Entity {
     public void setScale(float scale) {
     	this.scale = scale;
     }
+    
+    public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
      
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
         for(Component component : components) {
@@ -90,4 +119,13 @@ public class Entity {
     public void destroy(){
     	EntityContainer.destroyEntity(this);
     }
+
+	public Vector2f getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector2f velocity) {
+		this.velocity = velocity;
+	}
+
 }
