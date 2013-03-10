@@ -23,10 +23,8 @@ public class Night extends StateBasedGame{
 	}
 
 	@Override
-	public void initStatesList(GameContainer arg0) throws SlickException {
+	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new GameplayState(GAMEPLAYSTATE));
         this.addState(new MainMenuState(MAINMENUSTATE));
-		
 	}
-
 }

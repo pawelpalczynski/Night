@@ -22,8 +22,7 @@ public class Entity {
      
     ArrayList<Component> components = null;
      
-    public Entity(String id)
-    {
+    public Entity(String id) {
         this.id = id;
          
         components = new ArrayList<Component>();
@@ -33,8 +32,7 @@ public class Entity {
         rotation = 0;
     }
  
-    public void addComponent(Component component)
-    {
+    public void addComponent(Component component) {
         if(RenderComponent.class.isInstance(component)){
             renderComponent = (RenderComponent)component;
         }
@@ -42,39 +40,32 @@ public class Entity {
         components.add(component);
     }
  
-    public Component getComponent(String id)
-    {
-        for(Component comp : components)
-    {
-        if ( comp.getId().equalsIgnoreCase(id) )
-            return comp;
-    }
-         
-    return null;
+    public Component getComponent(String id) {    
+        for(Component comp : components) {
+        	if ( comp.getId().equalsIgnoreCase(id) )
+        		return comp;
+        }
+        return null;
     }
  
-    public Vector2f getPosition()
-    {
-    return position;
+    public Vector2f getPosition() {
+    	return position;
     }
      
-    public float getScale()
-    {
-    return scale;
+    public float getScale() {
+    	return scale;
     }
      
-    public float getRotation()
-    {
-    return rotation;
+    public float getRotation() {
+    	return rotation;
     }
      
-    public String getId()
-    {
+    public String getId() {
         return id;
     }
  
     public void setPosition(Vector2f position) {
-    this.position = position;
+    	this.position = position;
     }
  
     public void setRotation(float rotate) {
@@ -82,20 +73,21 @@ public class Entity {
     }
  
     public void setScale(float scale) {
-    this.scale = scale;
+    	this.scale = scale;
     }
      
-    public void update(GameContainer gc, StateBasedGame sb, int delta)
-    {
-        for(Component component : components)
-        {
+    public void update(GameContainer gc, StateBasedGame sb, int delta) {
+        for(Component component : components) {
             component.update(gc, sb, delta);
         }        	
     }
  
-    public void render(GameContainer gc, StateBasedGame sb, Graphics gr)
-    {
+    public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
         if(renderComponent != null)
             renderComponent.render(gc, sb, gr);
+    	}
+    
+    public void destroy(){
+    	EntityContainer.destroyEntity(this);
     }
 }

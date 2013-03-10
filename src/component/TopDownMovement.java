@@ -12,18 +12,15 @@ public class TopDownMovement extends Component {
     float direction;
     float speed;
      
-    public TopDownMovement( String id )
-    {
+    public TopDownMovement( String id ) {
         this.id = id;
     }
      
-    public float getSpeed()
-    {
+    public float getSpeed() {
         return speed;
     }
      
-    public float getDirection()
-    {
+    public float getDirection() {
         return direction;
     }
      
@@ -57,14 +54,6 @@ public class TopDownMovement extends Component {
   
             position.x -= hip * java.lang.Math.sin(java.lang.Math.toRadians(rotation));
             position.y += hip *java.lang.Math.cos(java.lang.Math.toRadians(rotation));
-        }
-        
-        /**
-         * Shooting
-         */
-        
-        if (input.isKeyPressed(Input.KEY_SPACE)){
-        	
         }
         
         /**
