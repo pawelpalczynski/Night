@@ -1,32 +1,62 @@
 package component;
 
+import message.CMessage;
+import message.MAddVelocity;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class CPhysics extends Component {
+import component.movement.CMovement;
 
-	public CPhysics(String id){
-		this.id = id;
+public class CPhysics extends Component {
+	
+	Vector2f velocity;
+	
+	CMovement movement;
+
+	public CPhysics(){
+		this.id = "Physics";
+		this.velocity = new Vector2f(0, 0);
 	}
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		Vector2f position = owner.getPosition();
-		Vector2f velocity = owner.getVelocity();
 		
 		position.add(velocity.scale(delta));
 		velocity.set(0, 0);
-		
-		owner.setPosition(position);
-		owner.setVelocity(velocity);
 	}
 
 	@Override
 	public void readMessage(Message message) {
-		// TODO Auto-generated method stub
 		
+	}
+
+	public Vector2f getVelocity() {
+		return velocity;
+	}
+
+	public void setVelocity(Vector2f velocity) {
+		this.velocity = velocity;
+	}
+	
+	public void setVelocity(MAddVelocity message){
+		this.velocity.add(message.getVelocity());
+	}
+
+	@Override
+	public void readMessage(CMessage message) {
+		if (message.getText() == "ComponentAdded"){
+			if (message.getSource().getId() == "TopDownMovement"){
+				this.movement = (CMovement) message.getSource();
+			}
+		}
+	}
+
+	@Override
+	public void setDependencies() {
+		this.movement = (CMovement) owner.getComponent("TopDownMovement");
 	}
 }

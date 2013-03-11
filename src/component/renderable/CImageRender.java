@@ -1,5 +1,6 @@
-package component;
+package component.renderable;
 
+import message.CMessage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -33,6 +34,18 @@ public class CImageRender extends CRenderable {
 
 	@Override
 	public void readMessage(Message message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readMessage(CMessage message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDependencies() {
 		// TODO Auto-generated method stub
 		
 	}

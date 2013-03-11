@@ -1,5 +1,6 @@
 package component;
 
+import message.CMessage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -12,8 +13,8 @@ import entity.EntityContainer;
 
 public class CShooting extends Component {
 	
-	public CShooting( String id ) {
-        this.id = id;
+	public CShooting() {
+        this.id = "Shooting";
     }
 
 	@Override
@@ -29,6 +30,18 @@ public class CShooting extends Component {
 
 	@Override
 	public void readMessage(Message message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readMessage(CMessage message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDependencies() {
 		// TODO Auto-generated method stub
 		
 	}

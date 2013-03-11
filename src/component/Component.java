@@ -1,5 +1,6 @@
 package component;
 
+import message.CMessage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -11,6 +12,8 @@ public abstract class Component {
      
     protected String id;
     protected Entity owner;
+    
+    public abstract void setDependencies();
      
     public String getId() {
         return id;
@@ -25,6 +28,8 @@ public abstract class Component {
     }
     
     public abstract void readMessage(Message message);
+    
+    public abstract void readMessage(CMessage message);
  
     public abstract void update(GameContainer gc, StateBasedGame sb, int delta);
 }

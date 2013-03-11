@@ -1,8 +1,9 @@
 package entity;
 
+import component.CColidable;
 import component.CDisposable;
 import component.CFlyStraight;
-import component.CPrimitiveRender;
+import component.renderable.CPrimitiveRender;
 
 public class Bullet extends Entity {
 
@@ -24,6 +25,7 @@ public class Bullet extends Entity {
 		this.addComponent(new CPrimitiveRender("render"));
 		this.addComponent(new CFlyStraight("flying", this.getDirection(), this.speed));
 		this.addComponent(new CDisposable("disposable"));
+		this.addComponent(new CColidable());
 	}
 
 	public float getSpeed() {

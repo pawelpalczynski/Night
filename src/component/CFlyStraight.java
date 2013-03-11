@@ -1,5 +1,6 @@
 package component;
 
+import message.CMessage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -36,6 +37,18 @@ public class CFlyStraight extends Component{
 
 	@Override
 	public void readMessage(Message message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void readMessage(CMessage message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDependencies() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,5 +1,6 @@
 package component;
 
+import message.CMessage;
 import message.MTakeDamage;
 import message.Message;
 
@@ -10,12 +11,12 @@ public class CHealth extends Component {
 	
 	private float health = 100f;
 
-	public CHealth(String id){
-		this.id = id;
+	public CHealth(){
+		this.id = "Health";
 	}
 	
-	public CHealth(String id, float health){
-		this.id = id;
+	public CHealth( float health){
+		this.id = "health";
 		this.health = health;
 	}
 	
@@ -33,6 +34,18 @@ public class CHealth extends Component {
 		if (message.getText() == "TakeDamage"){
 			takeDamage((MTakeDamage) message);
 		}
+	}
+
+	@Override
+	public void readMessage(CMessage message) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDependencies() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

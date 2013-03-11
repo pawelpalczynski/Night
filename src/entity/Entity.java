@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
+import message.CMessage;
+import message.MComponentAdded;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -10,14 +12,13 @@ import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
  
 import component.Component;
-import component.CRenderable;
+import component.renderable.CRenderable;
  
 public class Entity {
      
     String id;
      
     Vector2f position;
-    Vector2f velocity;
     int width;
 	int height;
 	float scale;
@@ -34,7 +35,6 @@ public class Entity {
         width = 10;
         height = 10;
         position = new Vector2f(0, 0);
-        velocity = new Vector2f(0, 0);
         scale = 1;
         rotation = 0;
     }
@@ -45,6 +45,9 @@ public class Entity {
         }
         component.setOwnerEntity(this);
         components.add(component);
+        component.setDependencies();
+        
+        sendMessage(new MComponentAdded(component));
     }
  
     public Component getComponent(String id) {    
@@ -56,6 +59,12 @@ public class Entity {
     }
     
     public void sendMessage(Message message){
+    	for (Component comp : components){
+    		comp.readMessage(message);
+    	}
+    }
+    
+    public void sendMessage(CMessage message){
     	for (Component comp : components){
     		comp.readMessage(message);
     	}
@@ -119,13 +128,5 @@ public class Entity {
     public void destroy(){
     	EntityContainer.destroyEntity(this);
     }
-
-	public Vector2f getVelocity() {
-		return velocity;
-	}
-
-	public void setVelocity(Vector2f velocity) {
-		this.velocity = velocity;
-	}
 
 }
