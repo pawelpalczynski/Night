@@ -1,0 +1,6 @@
+<sheet>
+	<sprite name="player_walk1.png" x="0" y="0" width="177" height="46" />
+	<sprite name="player_walk2.png" x="197" y="0" width="179" height="43" />
+	<sprite name="player_walk3.png" x="396" y="0" width="179" height="42" />
+	<sprite name="player_walk4.png" x="595" y="0" width="183" height="39" />
+</sheet>

@@ -1,6 +1,5 @@
 package entity;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -9,13 +8,13 @@ import component.CHealth;
 import component.CPhysics;
 import component.CShooting;
 import component.movement.CTopDownMovement;
-import component.renderable.CImageRender;
+import component.renderable.CAnimationRender;
 
 public class Player extends Entity {
 	
 	public Player() throws SlickException {
 		this.id = "Player";
-		this.addComponent(new CImageRender(new Image("data/images/player.png")));
+		this.addComponent(new CAnimationRender("data/images/player_walk_sheet.png", 30, 46, 20, 30, 0));
 		this.addComponent(new CPhysics());
 		this.addComponent(new CTopDownMovement());
 		this.addComponent(new CShooting());
