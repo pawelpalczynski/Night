@@ -8,12 +8,14 @@ import component.CHealth;
 import component.CPhysics;
 import component.AI.CChaseAI;
 import component.renderable.CAnimationRender;
+import component.renderable.CHealthDisplay;
 
 public class Zombie extends Enemy {
 
 	public Zombie() throws SlickException {
 		this.id = "Zombie";
 		this.addComponent(new CAnimationRender("data/images/zombie_walk_sheet.png", 56, 94, 70, 180, -90));
+		this.addComponent(new CHealthDisplay());
 		this.addComponent(new CPhysics());
 		this.addComponent(new CHealth());
 		this.addComponent(new CColidable());

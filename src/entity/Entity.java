@@ -26,7 +26,7 @@ public class Entity implements Cloneable {
     float rotation;
     protected int layer;
  
-    CRenderable renderComponent = null;
+    ArrayList<CRenderable> renderComponent = new ArrayList<CRenderable>();
      
     ArrayList<Component> components = null;
     public Entity() {         
@@ -56,10 +56,9 @@ public class Entity implements Cloneable {
         components.add(component);
         component.setDependencies();
         if(CRenderable.class.isInstance(component)){
-            renderComponent = (CRenderable)component;
-            renderComponent.setDimensions();
+            ((CRenderable) component).setDimensions();
+            renderComponent.add((CRenderable) component);
         }
-        
         sendMessage(new MComponentAdded(component));
     }
  
@@ -139,9 +138,8 @@ public class Entity implements Cloneable {
     }
  
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
-        if(renderComponent != null)
-            renderComponent.render(gc, sb, gr);
-    	}
+        for (CRenderable c : renderComponent) c.render(gc, sb, gr);
+    }
     
     public void destroy(){
     	EntityContainer.destroyEntity(this);
