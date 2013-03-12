@@ -21,9 +21,9 @@ public class CShooting extends Component {
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
 		Input input = gc.getInput();
 		
-		if (input.isKeyPressed(Input.KEY_SPACE)){
+		if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
 			Bullet bullet = new Bullet("bullet", 1f, owner.getRotation());
-			bullet.setPosition(new Vector2f(owner.getPosition().getX(), owner.getPosition().getY()));
+			bullet.setPosition(new Vector2f((float) (owner.getCenter().x + 2*owner.getWidth() * Math.sin(Math.toRadians(owner.getRotation()))), (float) (owner.getCenter().y - 2*owner.getHeight() * Math.cos(Math.toRadians(owner.getRotation())))));
 			EntityContainer.addEntity(bullet);
 		}
 	}

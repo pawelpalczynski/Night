@@ -9,19 +9,24 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class CHealth extends Component {
 	
-	private float health = 100f;
+	private float health;
 
 	public CHealth(){
 		this.id = "Health";
+		this.health = 100f;
 	}
 	
-	public CHealth( float health){
-		this.id = "health";
+	public CHealth(float health){
+		this.id = "Health";
 		this.health = health;
 	}
 	
 	public void takeDamage(MTakeDamage message){
 		health -= message.getDamage();
+	}
+	
+	public void takeDamage(float damage){
+		health -= damage;
 	}
 	
 	@Override
@@ -46,6 +51,10 @@ public class CHealth extends Component {
 	public void setDependencies() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public float getHealth() {
+		return health;
 	}
 
 }

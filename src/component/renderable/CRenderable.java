@@ -7,11 +7,18 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Component;
  
 public abstract class CRenderable extends Component {
-     
-    public CRenderable(String id)
-    {
-    this.id = id;
-    }
+	
+	int priority = 0;
+	
+	public abstract void setDimensions();
      
     public abstract void render(GameContainer gc, StateBasedGame sb, Graphics gr);
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
 }

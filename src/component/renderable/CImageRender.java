@@ -13,10 +13,14 @@ public class CImageRender extends CRenderable {
  
     Image image;
      
-    public CImageRender(String id, Image image)
-    {
-        super(id);
+    public CImageRender(Image image) {
+    	this.id = "ImageRender";
         this.image = image;
+    }
+    
+    public void setDimensions(){
+    	owner.setWidth(image.getWidth());
+        owner.setHeight(image.getHeight());
     }
      
     @Override

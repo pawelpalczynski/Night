@@ -1,4 +1,4 @@
-package component;
+package component.movement;
 
 import message.CMessage;
 import message.Message;
@@ -6,6 +6,8 @@ import message.Message;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
+
+import component.Component;
 
 public class CFlyStraight extends Component{
 	
@@ -19,8 +21,8 @@ public class CFlyStraight extends Component{
 	 * @param speed
 	 */
 	
-	public CFlyStraight(String id, float direction, float speed){
-		this.id = id;
+	public CFlyStraight(float direction, float speed){
+		this.id = "FlyStraight";
 		this.direction = direction;
 		this.speed = speed;
 	}

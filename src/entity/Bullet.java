@@ -2,7 +2,8 @@ package entity;
 
 import component.CColidable;
 import component.CDisposable;
-import component.CFlyStraight;
+import component.CHealth;
+import component.movement.CFlyStraight;
 import component.renderable.CPrimitiveRender;
 
 public class Bullet extends Entity {
@@ -10,22 +11,17 @@ public class Bullet extends Entity {
 	float direction;
 	float speed;
 	
-	public Bullet(String id){
-		super(id);
-
-		this.addComponent(new CPrimitiveRender("render"));
-	}
-	
 	public Bullet(String id, float speed, float direction) {
 		super(id);
 		
 		setSpeed(speed);
 		setDirection(direction);
 		
-		this.addComponent(new CPrimitiveRender("render"));
-		this.addComponent(new CFlyStraight("flying", this.getDirection(), this.speed));
-		this.addComponent(new CDisposable("disposable"));
+		this.addComponent(new CPrimitiveRender());
+		this.addComponent(new CFlyStraight(this.getDirection(), this.speed));
+		this.addComponent(new CDisposable());
 		this.addComponent(new CColidable());
+		this.addComponent(new CHealth(1));
 	}
 
 	public float getSpeed() {

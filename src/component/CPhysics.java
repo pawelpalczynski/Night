@@ -1,7 +1,6 @@
 package component;
 
 import message.CMessage;
-import message.MAddVelocity;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
@@ -40,10 +39,6 @@ public class CPhysics extends Component {
 
 	public void setVelocity(Vector2f velocity) {
 		this.velocity = velocity;
-	}
-	
-	public void setVelocity(MAddVelocity message){
-		this.velocity.add(message.getVelocity());
 	}
 
 	@Override

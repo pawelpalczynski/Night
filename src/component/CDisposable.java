@@ -9,8 +9,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class CDisposable extends Component {
 	
-	public CDisposable(String id){
-		this.id = id;
+	public CDisposable(){
+		this.id = "Disposable";
 	}
 
 	@Override

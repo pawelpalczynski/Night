@@ -14,19 +14,30 @@ import org.newdawn.slick.state.StateBasedGame;
 import component.Component;
 import component.renderable.CRenderable;
  
-public class Entity {
+public class Entity implements Cloneable {
      
-    String id;
+    protected String id;
      
     Vector2f position;
+    Vector2f center;
     int width;
 	int height;
 	float scale;
     float rotation;
+    protected int layer;
  
     CRenderable renderComponent = null;
      
     ArrayList<Component> components = null;
+    public Entity() {         
+        components = new ArrayList<Component>();
+        width = 10;
+        height = 10;
+        position = new Vector2f(0, 0);
+        center = new Vector2f(width/2, height/2);
+        scale = 1;
+        rotation = 0;
+    }
      
     public Entity(String id) {
         this.id = id;
@@ -35,17 +46,19 @@ public class Entity {
         width = 10;
         height = 10;
         position = new Vector2f(0, 0);
+        center = new Vector2f(width/2, height/2);
         scale = 1;
         rotation = 0;
     }
  
     public void addComponent(Component component) {
-        if(CRenderable.class.isInstance(component)){
-            renderComponent = (CRenderable)component;
-        }
         component.setOwnerEntity(this);
         components.add(component);
         component.setDependencies();
+        if(CRenderable.class.isInstance(component)){
+            renderComponent = (CRenderable)component;
+            renderComponent.setDimensions();
+        }
         
         sendMessage(new MComponentAdded(component));
     }
@@ -56,6 +69,10 @@ public class Entity {
         		return comp;
         }
         return null;
+    }
+    
+    public ArrayList<Component> getComponentList(){
+    	return components;
     }
     
     public void sendMessage(Message message){
@@ -117,7 +134,8 @@ public class Entity {
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
         for(Component component : components) {
             component.update(gc, sb, delta);
-        }        	
+        }
+        center.set(position.x + width/2, position.y + height/2);
     }
  
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
@@ -128,5 +146,21 @@ public class Entity {
     public void destroy(){
     	EntityContainer.destroyEntity(this);
     }
+
+	public Vector2f getCenter() {
+		return center;
+	}
+
+	public void setCenter(Vector2f center) {
+		this.center = center;
+	}
+
+	public int getLayer() {
+		return layer;
+	}
+
+	public void setLayer(int layer) {
+		this.layer = layer;
+	}
 
 }

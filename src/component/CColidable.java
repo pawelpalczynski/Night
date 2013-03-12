@@ -12,8 +12,11 @@ import entity.EntityContainer;
 
 public class CColidable extends Component{
 	
+	CHealth health;
+	
 	public CColidable(){
 		this.id = "Colidable";
+		this.health = new CHealth();
 	}
 
 	@Override
@@ -22,9 +25,8 @@ public class CColidable extends Component{
 		for (Entity e : EntityContainer.getEntities()){
 			if (e.getComponent("colidable") != null && e != this.owner){
 				float size1 = (e.getWidth() < e.getHeight()) ? e.getWidth() : e.getHeight();
-				if (e.getPosition().distanceSquared(owner.getPosition()) < size1*size1 + size2*size2){
-					System.out.println("TakeDamage");
-					owner.sendMessage(new MTakeDamage(owner, 10f));
+				if (e.getCenter().distanceSquared(owner.getCenter()) < size1*size1 + size2*size2){
+					health.takeDamage(10f);
 					e.sendMessage(new MTakeDamage(owner, 10f));
 				}
 			}
@@ -39,13 +41,15 @@ public class CColidable extends Component{
 
 	@Override
 	public void readMessage(CMessage message) {
-		// TODO Auto-generated method stub
-		
+		if (message.getText() == "ComponentAdded"){
+			if (message.getSource().getId() == "Health"){
+				this.health = (CHealth) message.getSource();
+			}
+		}
 	}
 
 	@Override
 	public void setDependencies() {
-		// TODO Auto-generated method stub
-		
+		this.health = (CHealth) owner.getComponent("Health");		
 	}
 }

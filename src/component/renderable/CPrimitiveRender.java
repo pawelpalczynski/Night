@@ -13,18 +13,18 @@ public class CPrimitiveRender extends CRenderable {
 	String primitive;
 	float size = 5f;
 	
-	public CPrimitiveRender(String id) {
-		super(id);
+	public CPrimitiveRender() {
+		this.id = "PrimitieRender";
 		this.primitive = "Circle";
 	}
 	
-	public CPrimitiveRender(String id, String primitive) {
-		super(id);
+	public CPrimitiveRender(String primitive) {
+		this.id = "PrimitieRender";
 		this.primitive = primitive;
 	}
 	
-	public CPrimitiveRender(String id, String primitive, float size) {
-		super(id);
+	public CPrimitiveRender(String primitive, float size) {
+		this.id = "PrimitieRender";
 		this.primitive = primitive;
 		this.size = size;
 	}
@@ -63,6 +63,12 @@ public class CPrimitiveRender extends CRenderable {
 
 	@Override
 	public void setDependencies() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setDimensions() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -1,20 +1,28 @@
 package game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.tiled.TiledMap;
 
 import entity.Entity;
 import entity.Player;
-import entity.Zombie;
 import entity.EntityContainer;
+import entity.enemy.Zombie;
+import entity.map.Map;
 
 public class GameplayState extends BasicGameState{
 	
 	private final int stateID;
+	
+	private TiledMap map;
 	
 	GameplayState(int stateID) {
 		this.stateID = stateID;
@@ -22,13 +30,19 @@ public class GameplayState extends BasicGameState{
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
-		EntityContainer.addEntity(new Player("player"));
-		EntityContainer.addEntity(new Zombie("zombie"));
+		Player player = new Player();
+		EntityContainer.setPlayer(player);
+		EntityContainer.addEntity(player);
+		
+		EntityContainer.addEntity(new Map("data/map.tmx"));
+		EntityContainer.addEntity(new Zombie());
+		
+		//map = new TiledMap("data/map.tmx");
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sb, Graphics gr) throws SlickException {
-		for (Entity e : EntityContainer.getEntities()){
+		for (Entity e : EntityContainer.getEntitiesRender()){
 			e.render(gc, sb, gr);
 		}
 	}
@@ -39,10 +53,18 @@ public class GameplayState extends BasicGameState{
 		
 		if (input.isKeyPressed(Input.KEY_ESCAPE)){
 			gc.exit();
+		} else if (input.isKeyPressed(Input.KEY_F1)){
+			gc.setFullscreen(gc.isFullscreen() ? false : true);
 		}
 		
 		for (Entity e : EntityContainer.getEntities()){
 			e.update(gc, sb, delta);
+		}
+		
+		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)){
+			Zombie zombie = new Zombie();
+			zombie.setPosition(new Vector2f(input.getMouseX(), input.getMouseY()));
+			EntityContainer.addEntity(zombie);
 		}
 
 		// Add and destroy entities
@@ -54,5 +76,7 @@ public class GameplayState extends BasicGameState{
 	public int getID() {
 		return this.stateID;
 	}
+	
+	
 
 }

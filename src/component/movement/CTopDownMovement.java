@@ -29,6 +29,7 @@ public class CTopDownMovement extends CMovement {
     	this.velocity = physics.getVelocity();
         float rotation = owner.getRotation();
         Vector2f position = owner.getPosition();
+        Vector2f center = owner.getCenter();
         float width = gc.getWidth();
         float height = gc.getHeight();
                  
@@ -38,18 +39,18 @@ public class CTopDownMovement extends CMovement {
          * Movement control
          */
         if (input.isKeyDown(Input.KEY_A)) {
-            rotation += -0.2f * delta;
+            velocity.x -= 0.4f;
         } else if(input.isKeyDown(Input.KEY_D)) {
-            rotation += 0.2f * delta;
+        	velocity.x += 0.4f;
         }
 
         if (input.isKeyDown(Input.KEY_W)) {
-            velocity.x += 0.4f * Math.sin(Math.toRadians(rotation));
-            velocity.y -= 0.4f * Math.cos(Math.toRadians(rotation));
+            velocity.y -= 0.4f;
         } else if (input.isKeyDown(Input.KEY_S)) {
-            velocity.x -= 0.4f * Math.sin(Math.toRadians(rotation));
-            velocity.y += 0.4f * Math.cos(Math.toRadians(rotation));
+            velocity.y += 0.4f;
         }
+        
+        rotation = (float) Math.toDegrees(Math.atan2(-(input.getMouseX() - center.getX()), (input.getMouseY() - center.getY()))) + 180;
         
         /**
          * Boundary conditions
