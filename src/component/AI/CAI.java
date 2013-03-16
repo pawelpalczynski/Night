@@ -7,7 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.CPhysics;
+import component.CJBox2D;
 import component.Component;
 import entity.EntityContainer;
 import entity.Player;
@@ -16,12 +16,12 @@ public abstract class CAI extends Component {
 	
 	Vector2f velocity;
 	Player player;
-	CPhysics physics;
+	CJBox2D jbox;
 	
 	@Override
 	public void setDependencies() {
 		this.player = EntityContainer.getPlayer();
-		this.physics = (CPhysics) owner.getComponent("Physics");
+		this.jbox = (CJBox2D) owner.getComponent("JBox2D");
 	}
 
 	@Override
@@ -33,8 +33,8 @@ public abstract class CAI extends Component {
 	@Override
 	public void readMessage(CMessage message) {
 		if (message.getText() == "ComponentAdded"){
-			if (message.getSource().getId() == "Physics"){
-				physics = (CPhysics) message.getSource();
+			if (message.getSource().getId() == "JBox2D"){
+				this.jbox = (CJBox2D) message.getSource();
 			}
 		}
 		

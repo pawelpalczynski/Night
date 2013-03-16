@@ -2,11 +2,12 @@ package entity.enemy;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import component.Component;
 import component.AI.CAI;
-import component.AI.CChaseAI;
+//import component.AI.CChaseAI;
 import component.AI.CIdleAI;
 
 import entity.Entity;
@@ -32,7 +33,8 @@ public class Enemy extends Entity {
         return null;
     }
 	
-	public void update(GameContainer gc, StateBasedGame sb, int delta){
+	@Override
+	public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException{
 		super.update(gc, sb, delta);
 		Input input = gc.getInput();
 		

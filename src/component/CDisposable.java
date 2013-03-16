@@ -7,6 +7,8 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import entity.EntityContainer;
+
 public class CDisposable extends Component {
 	
 	public CDisposable(){
@@ -15,8 +17,8 @@ public class CDisposable extends Component {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		float width = gc.getWidth();
-		float height = gc.getHeight();
+		float width = EntityContainer.getBoundX();
+		float height = EntityContainer.getBoundY();
 		Vector2f position = owner.getPosition();
 		
 		if (position.x < 0 || position.x > width || position.y < 0 || position.y > height){

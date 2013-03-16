@@ -3,71 +3,55 @@ package component.movement;
 import message.CMessage;
 import message.Message;
 
+import org.jbox2d.common.Vec2;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
-import component.CPhysics;
+import component.CJBox2D;
+import entity.EntityContainer;
   
 public class CTopDownMovement extends CMovement {
 	
-	CPhysics physics = new CPhysics();
+	CJBox2D jbox;
+	private float speed = 10f;
     
     public CTopDownMovement() {
         this.id = "TopDownMovement";
-        this.velocity = new Vector2f(0, 0);
     }
     
-    public void setDependencies(){
-    	this.physics = (CPhysics) owner.getComponent("Physics");
+    @Override
+	public void setDependencies(){
+    	this.jbox = (CJBox2D) owner.getComponent("JBox2D");
     }
      
     @Override
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
-    	
-    	this.velocity = physics.getVelocity();
-        float rotation = owner.getRotation();
-        Vector2f position = owner.getPosition();
-        Vector2f center = owner.getCenter();
-        float width = gc.getWidth();
-        float height = gc.getHeight();
-                 
+    	Vector2f center = owner.getCenter();
+    	                 
         Input input = gc.getInput();
+        
         
         /**
          * Movement control
          */
+        jbox.getBody().setLinearVelocity(new Vec2(0f, 0f));
         if (input.isKeyDown(Input.KEY_A)) {
-            velocity.x -= 0.4f;
+        	jbox.getBody().m_linearVelocity.x = -speed;
         } else if(input.isKeyDown(Input.KEY_D)) {
-        	velocity.x += 0.4f;
+        	jbox.getBody().m_linearVelocity.x = +speed;
         }
 
         if (input.isKeyDown(Input.KEY_W)) {
-            velocity.y -= 0.4f;
+        	jbox.getBody().m_linearVelocity.y = -speed;
         } else if (input.isKeyDown(Input.KEY_S)) {
-            velocity.y += 0.4f;
+        	jbox.getBody().m_linearVelocity.y = +speed;
         }
         
-        rotation = (float) Math.toDegrees(Math.atan2(-(input.getMouseX() - center.getX()), (input.getMouseY() - center.getY()))) + 180;
+        if (input.isKeyDown(Input.KEY_E)) jbox.getBody().applyTorque(2f);
         
-        /**
-         * Boundary conditions
-         */
-        if (position.x < 0){
-        	position.x = width;
-        } else if (position.x > width){
-        	position.x = 0;
-        }
-        
-        if (position.y < 0){
-        	position.y = height;
-        } else if (position.y > height){
-        	position.y = 0;
-        }
-  
-        owner.setPosition(position);
+        float rotation = (float) Math.toDegrees(Math.atan2(-(input.getMouseX() + EntityContainer.ViewX - center.getX()), (input.getMouseY() + EntityContainer.ViewY - center.getY()))) + 180;
         owner.setRotation(rotation);
     }
 
@@ -79,8 +63,8 @@ public class CTopDownMovement extends CMovement {
 	@Override
 	public void readMessage(CMessage message) {
 		if (message.getText() == "ComponentAdded"){
-			if (message.getSource().getId() == "Physics"){
-				this.physics = (CPhysics) message.getSource();
+			if (message.getSource().getId() == "JBox2D"){
+				this.jbox = (CJBox2D) message.getSource();
 			}
 		}
 		

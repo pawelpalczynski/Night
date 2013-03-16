@@ -18,7 +18,8 @@ public class CImageRender extends CRenderable {
         this.image = image;
     }
     
-    public void setDimensions(){
+    @Override
+	public void setDimensions(){
     	owner.setWidth(image.getWidth());
         owner.setHeight(image.getHeight());
     }
@@ -27,13 +28,14 @@ public class CImageRender extends CRenderable {
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
         Vector2f pos = owner.getPosition();
         float scale = owner.getScale();
-         
+        image.rotate(owner.getRotation() - image.getRotation());
+        
         image.draw(pos.x, pos.y, scale);
     }
  
     @Override
     public void update(GameContainer gc, StateBasedGame sb, int delta) {
-        image.rotate(owner.getRotation() - image.getRotation());
+        
     }
 
 	@Override

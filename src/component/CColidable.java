@@ -1,14 +1,10 @@
 package component;
 
 import message.CMessage;
-import message.MTakeDamage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.state.StateBasedGame;
-
-import entity.Entity;
-import entity.EntityContainer;
 
 public class CColidable extends Component{
 	
@@ -21,16 +17,11 @@ public class CColidable extends Component{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		float size2 = (owner.getWidth() < owner.getHeight()) ? owner.getWidth() : owner.getHeight();
-		for (Entity e : EntityContainer.getEntities()){
-			if (e.getComponent("colidable") != null && e != this.owner){
-				float size1 = (e.getWidth() < e.getHeight()) ? e.getWidth() : e.getHeight();
-				if (e.getCenter().distanceSquared(owner.getCenter()) < size1*size1 + size2*size2){
-					health.takeDamage(10f);
-					e.sendMessage(new MTakeDamage(owner, 10f));
-				}
-			}
-		}
+//		
+	}
+	
+	public void colide(){
+		health.takeDamage(10f);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import message.CMessage;
 import message.Message;
 
 import org.newdawn.slick.GameContainer;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
 import entity.Entity;
@@ -31,5 +32,5 @@ public abstract class Component {
     
     public abstract void readMessage(CMessage message);
  
-    public abstract void update(GameContainer gc, StateBasedGame sb, int delta);
+    public abstract void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException;
 }

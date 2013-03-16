@@ -1,23 +1,27 @@
 package entity;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
 import component.CColidable;
 import component.CDisposable;
 import component.CHealth;
 import component.movement.CFlyStraight;
-import component.renderable.CPrimitiveRender;
+import component.renderable.CImageRender;
 
 public class Bullet extends Entity {
 
 	float direction;
 	float speed;
 	
-	public Bullet(String id, float speed, float direction) {
-		super(id);
+	public Bullet(float speed, float direction) throws SlickException {
+		this.id = "Bullet";
 		
-		setSpeed(speed);
-		setDirection(direction);
+		this.speed = speed;
+		this.direction = direction;
+		this.rotation = direction;
 		
-		this.addComponent(new CPrimitiveRender());
+		this.addComponent(new CImageRender(new Image("data/images/shot.png")));
 		this.addComponent(new CFlyStraight(this.getDirection(), this.speed));
 		this.addComponent(new CDisposable());
 		this.addComponent(new CColidable());
@@ -28,17 +32,9 @@ public class Bullet extends Entity {
 		return speed;
 	}
 
-	public void setSpeed(float speed) {
-		this.speed = speed;
-	}
-
 
 	public float getDirection() {
 		return direction;
 	}
 
-
-	public void setDirection(float direction) {
-		this.direction = direction;
-	}
 }

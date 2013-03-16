@@ -8,9 +8,11 @@ import message.Message;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
  
+import component.CJBox2D;
 import component.Component;
 import component.renderable.CRenderable;
  
@@ -20,8 +22,8 @@ public class Entity implements Cloneable {
      
     Vector2f position;
     Vector2f center;
-    int width;
-	int height;
+    float width;
+	float height;
 	float scale;
     float rotation;
     protected int layer;
@@ -30,31 +32,26 @@ public class Entity implements Cloneable {
      
     ArrayList<Component> components = null;
     public Entity() {         
-        components = new ArrayList<Component>();
-        width = 10;
-        height = 10;
-        position = new Vector2f(0, 0);
-        center = new Vector2f(width/2, height/2);
-        scale = 1;
-        rotation = 0;
+        this("Entity");
     }
      
     public Entity(String id) {
         this.id = id;
          
         components = new ArrayList<Component>();
-        width = 10;
-        height = 10;
+        width = 10f;
+        height = 10f;
         position = new Vector2f(0, 0);
-        center = new Vector2f(width/2, height/2);
-        scale = 1;
-        rotation = 0;
+        center = new Vector2f(width/2f, height/2f);
+        scale = 1f;
+        rotation = 0f;
     }
  
     public void addComponent(Component component) {
         component.setOwnerEntity(this);
         components.add(component);
         component.setDependencies();
+        if (CJBox2D.class.isInstance(component)) ((CJBox2D) component).setPosition();
         if(CRenderable.class.isInstance(component)){
             ((CRenderable) component).setDimensions();
             renderComponent.add((CRenderable) component);
@@ -113,28 +110,21 @@ public class Entity implements Cloneable {
     public void setScale(float scale) {
     	this.scale = scale;
     }
-    
-    public int getWidth() {
-		return width;
-	}
+   
 
 	public void setWidth(int width) {
 		this.width = width;
-	}
-	
-	public int getHeight() {
-		return height;
 	}
 
 	public void setHeight(int height) {
 		this.height = height;
 	}
      
-    public void update(GameContainer gc, StateBasedGame sb, int delta) {
+    public void update(GameContainer gc, StateBasedGame sb, int delta) throws SlickException {
         for(Component component : components) {
             component.update(gc, sb, delta);
         }
-        center.set(position.x + width/2, position.y + height/2);
+        center.set(position.x + width/2f, position.y + height/2f);
     }
  
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
@@ -159,6 +149,14 @@ public class Entity implements Cloneable {
 
 	public void setLayer(int layer) {
 		this.layer = layer;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public float getHeight() {
+		return height;
 	}
 
 }

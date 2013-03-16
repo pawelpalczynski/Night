@@ -9,6 +9,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.tiled.TiledMap;
 
+import entity.EntityContainer;
+
 public class CMapRender extends CRenderable {
 	
 	TiledMap map;
@@ -20,8 +22,8 @@ public class CMapRender extends CRenderable {
 
 	@Override
 	public void setDimensions() {
-		// TODO Auto-generated method stub
-		
+		EntityContainer.setBoundX(map.getWidth());
+		EntityContainer.setBoundY(map.getHeight());
 	}
 
 	@Override
