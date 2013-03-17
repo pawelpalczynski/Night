@@ -23,7 +23,7 @@ public class CTopDownMovement extends CMovement {
     
     @Override
 	public void setDependencies(){
-    	this.jbox = (CJBox2D) owner.getComponent("JBox2D");
+    	if (owner.getComponent("JBox2D") != null) this.jbox = (CJBox2D) owner.getComponent("JBox2D");
     }
      
     @Override

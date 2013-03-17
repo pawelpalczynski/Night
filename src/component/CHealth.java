@@ -31,7 +31,7 @@ public class CHealth extends Component {
 	
 	@Override
 	public void update(GameContainer gc, StateBasedGame sb, int delta) {
-		if (health < 0) owner.destroy();
+		if (health < 0 && owner != null) owner.destroy();
 	}
 
 	@Override

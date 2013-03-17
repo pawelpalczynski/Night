@@ -18,10 +18,12 @@ public class Player extends Entity {
 		this.addComponent(new CAnimationRender("data/images/player_walk_sheet.png", 30, 46, 20, 30, 0));
 		this.addComponent(new CHealthDisplay());
 		this.addComponent(new CTopDownMovement());
-		this.addComponent(new CShooting());
-//		this.addComponent(new CColidable());
+		this.addComponent(new CShooting(2000f));
+		this.addComponent(new CColidable());
 		this.addComponent(new CHealth());
-		this.addComponent(new CJBox2D(512f, 384f, BodyType.DYNAMIC, CJBox2D.CIRCLE));
+		
+		this.addComponent(new CJBox2D(512f, 384f, BodyType.DYNAMIC, CJBox2D.CIRCLE, -1));
+		
 		this.layer = 3;
 	}
 }

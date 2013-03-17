@@ -17,9 +17,9 @@ public class Zombie extends Enemy {
 		this.addComponent(new CAnimationRender("data/images/zombie_walk_sheet.png", 56, 94, 70, 180, -90));
 		this.addComponent(new CHealthDisplay());
 		this.addComponent(new CHealth());
-		this.addComponent(new CColidable());
+		this.addComponent(new CColidable(10f));
 		this.addComponent(new CChaseAI());
-		this.addComponent(new CJBox2D(x, y, BodyType.DYNAMIC, CJBox2D.CIRCLE));
+		this.addComponent(new CJBox2D(x, y, BodyType.DYNAMIC, CJBox2D.CIRCLE, 1));
 		this.layer = 2;
 	}
 }

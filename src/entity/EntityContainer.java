@@ -7,6 +7,8 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
 
+import box2dLight.RayHandler;
+
 import component.CJBox2D;
 
 import message.Message;
@@ -24,13 +26,20 @@ public class EntityContainer {
 	private static Player player;
 	private static World world = new World(new Vec2(0f, 0f), false);
 	
+	// Initial view
 	public static float ViewX = 0;
 	public static float ViewY = 0;
+	
+	// Map size
 	public static float BoundX = 1600;
 	public static float BoundY = 1200;
 	
+	// Unit conversion
 	public static float SlickToJBox2D = 1f/30f;
 	public static float JBox2DToSlick = 30f;
+	
+	// Box2DLight
+//	public static RayHandler rayhandler = new RayHandler(world)
 	
 	public static void addEntity(Entity e){
 		entitiesToAdd.add(e);
@@ -54,7 +63,10 @@ public class EntityContainer {
 	public static void destroyEntity(Entity e){
 		entitiesToDestroy.add(e);
 		if (e.getComponent("Colidable") != null) entitiesCollide.remove(e);
-		if (e.getComponent("JBox2D") != null) bodiesCollide.remove(((CJBox2D) e.getComponent("JBox2D")).getBody());
+		if (e.getComponent("JBox2D") != null) {
+			bodiesCollide.remove(((CJBox2D) e.getComponent("JBox2D")).getBody());
+			world.destroyBody(((CJBox2D) e.getComponent("JBox2D")).getBody());
+		}
 	}
 	
 	public static void removeEntities(){

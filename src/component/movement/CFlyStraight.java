@@ -7,12 +7,14 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
+import component.CJBox2D;
 import component.Component;
 
 public class CFlyStraight extends Component{
 	
 	private float direction;
 	private float speed;
+	CJBox2D jbox;
 	
 	/**
 	 * 
@@ -45,13 +47,16 @@ public class CFlyStraight extends Component{
 
 	@Override
 	public void readMessage(CMessage message) {
-		// TODO Auto-generated method stub
-		
+		if (message.getText() == "ComponentAdded"){
+			if (message.getSource().getId() == "JBox2D"){
+				this.jbox = (CJBox2D) message.getSource();
+			}
+		}		
 	}
 
 	@Override
 	public void setDependencies() {
-		// TODO Auto-generated method stub
+		if (owner.getComponent("JBox2D") != null) this.jbox = (CJBox2D) owner.getComponent("JBox2D");
 		
 	}
 

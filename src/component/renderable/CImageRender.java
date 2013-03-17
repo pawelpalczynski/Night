@@ -28,7 +28,7 @@ public class CImageRender extends CRenderable {
     public void render(GameContainer gc, StateBasedGame sb, Graphics gr) {
         Vector2f pos = owner.getPosition();
         float scale = owner.getScale();
-        image.rotate(owner.getRotation() - image.getRotation());
+        image.rotate((float) (owner.getRotation() - image.getRotation()));
         
         image.draw(pos.x, pos.y, scale);
     }
@@ -46,14 +46,12 @@ public class CImageRender extends CRenderable {
 
 	@Override
 	public void readMessage(CMessage message) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setDependencies() {
-		// TODO Auto-generated method stub
-		
+	
 	}
  
 }

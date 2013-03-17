@@ -12,7 +12,7 @@ public class Wall extends Entity {
 		this.width = width;
 		this.height = height;
 		this.addComponent(new CPrimitiveRender(true, CPrimitiveRender.RECTANGLE));
-		this.addComponent(new CJBox2D(x, y, BodyType.STATIC, CJBox2D.RECTANGLE));
+		this.addComponent(new CJBox2D(x, y, BodyType.STATIC, CJBox2D.RECTANGLE, 1, 1, 1, 0.1f));
 		this.layer = 1;
 	}
 }

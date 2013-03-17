@@ -3,10 +3,10 @@ package component;
 import message.CMessage;
 import message.Message;
 
+import org.jbox2d.common.Vec2;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 import entity.Bullet;
@@ -15,9 +15,13 @@ import entity.EntityContainer;
 public class CShooting extends Component {
 	
 	int weapon = 1;
+	CJBox2D jboxPlayer;
+	float speed;
+	float direction;
 	
-	public CShooting() {
+	public CShooting(float speed) {
         this.id = "Shooting";
+        this.speed = speed;
     }
 
 	@Override
@@ -29,22 +33,25 @@ public class CShooting extends Component {
 		
 		if (weapon == 1){
 			if (input.isMousePressed(Input.MOUSE_LEFT_BUTTON)){
-				Bullet bullet = new Bullet(1f, owner.getRotation());
-				float wth = (float) (owner.getCenter().x + (1/2f) * owner.getWidth() * Math.sin(Math.toRadians(owner.getRotation()))) - bullet.getWidth()/2f;
-				float hgt = (float) (owner.getCenter().y - (1/2f) * owner.getHeight() * Math.cos(Math.toRadians(owner.getRotation()))) - bullet.getHeight()/2f;
-				bullet.setPosition(new Vector2f(wth, hgt));
-				EntityContainer.addEntity(bullet);
+				addBullet();
 			}
 		} else {
 			if (input.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON)){
-				Bullet bullet = new Bullet(1f, owner.getRotation());
-				float wth = (float) (owner.getCenter().x + (1/2f) * owner.getWidth() * Math.sin(Math.toRadians(owner.getRotation()))) - bullet.getWidth()/2f;
-				float hgt = (float) (owner.getCenter().y - (1/2f) * owner.getHeight() * Math.cos(Math.toRadians(owner.getRotation()))) - bullet.getHeight()/2f;
-				bullet.setPosition(new Vector2f(wth, hgt));
-				EntityContainer.addEntity(bullet);
+				addBullet();
 			}
 		}
 		
+	}
+	
+	private void addBullet() throws SlickException {
+		Bullet bullet = new Bullet(-100, -100, 1f, owner.getRotation());
+		CJBox2D jbox = (CJBox2D) bullet.getComponent("JBox2D");
+		
+		jbox.getBody().setBullet(true);
+		jbox.getBody().getPosition().x = (float) ((owner.getCenter().x + (1/2f) * owner.getWidth() * Math.sin(Math.toRadians(owner.getRotation()))) - bullet.getWidth()/2f)*EntityContainer.SlickToJBox2D;
+		jbox.getBody().getPosition().y = (float) ((owner.getCenter().y - (1/2f) * owner.getHeight() * Math.cos(Math.toRadians(owner.getRotation()))) - bullet.getHeight()/2f)*EntityContainer.SlickToJBox2D;
+		jbox.getBody().setLinearVelocity(new Vec2( (float) (speed*Math.sin(Math.toRadians(owner.getRotation())))*EntityContainer.SlickToJBox2D, (float) -(speed*Math.cos(Math.toRadians(owner.getRotation())))*EntityContainer.SlickToJBox2D));
+		EntityContainer.addEntity(bullet);
 	}
 
 	@Override
@@ -55,14 +62,17 @@ public class CShooting extends Component {
 
 	@Override
 	public void readMessage(CMessage message) {
-		// TODO Auto-generated method stub
+		if (message.getText() == "ComponentAdded") {
+			if (message.getSource().getId() == "JBox2D") {
+				jboxPlayer = (CJBox2D) message.getSource();
+			}
+		}
 		
 	}
 
 	@Override
 	public void setDependencies() {
-		// TODO Auto-generated method stub
-		
+		if (owner.getComponent("JBox2D") != null) jboxPlayer = (CJBox2D) owner.getComponent("JBox2D");
 	}
 
 }

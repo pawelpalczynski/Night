@@ -12,7 +12,7 @@ import entity.Entity;
 public abstract class Component {
      
     protected String id;
-    protected Entity owner;
+    protected Entity owner = new Entity();
     
     public abstract void setDependencies();
      

@@ -1,13 +1,13 @@
 package game;
 
+import message.ContactListenerSlick;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
-
-import component.CColidable;
 
 import entity.Entity;
 import entity.Player;
@@ -27,19 +27,21 @@ public class GameplayState extends BasicGameState{
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sb) throws SlickException {
+		EntityContainer.getWorld().setContactListener(new ContactListenerSlick());
+		
 		Player player = new Player();
 		EntityContainer.setPlayer(player);
 		EntityContainer.addEntity(player);
 		
 		EntityContainer.addEntity(new Map("data/map.tmx"));
-		EntityContainer.addEntity(new Rock());
+		EntityContainer.addEntity(new Rock(200, 1000));
+		EntityContainer.addEntity(new Zombie(600, 100));
 		
 		// Walls
 		EntityContainer.addEntity(new Wall(EntityContainer.getBoundX()/2f, 0, EntityContainer.getBoundX(), 0));
 		EntityContainer.addEntity(new Wall(0, EntityContainer.getBoundY()/2f, 0, EntityContainer.getBoundY()));
 		EntityContainer.addEntity(new Wall(EntityContainer.getBoundX(), EntityContainer.getBoundY()/2f, 0, EntityContainer.getBoundY()));
 		EntityContainer.addEntity(new Wall(EntityContainer.getBoundX()/2f, EntityContainer.getBoundY(), EntityContainer.getBoundX(), 0));
-		
 	}
 
 	@Override
@@ -80,6 +82,8 @@ public class GameplayState extends BasicGameState{
 		// Add zombies on r-click
 		if (input.isMousePressed(Input.MOUSE_RIGHT_BUTTON)){
 			EntityContainer.addEntity(new Zombie(input.getMouseX() + EntityContainer.ViewX, input.getMouseY() + EntityContainer.ViewY));
+		} else if (input.isMousePressed(Input.MOUSE_MIDDLE_BUTTON)) {
+			EntityContainer.addEntity(new Rock(input.getMouseX() + EntityContainer.ViewX, input.getMouseY() + EntityContainer.ViewY));
 		}
 
 		// Add and destroy entities
@@ -102,17 +106,21 @@ public class GameplayState extends BasicGameState{
 	}
 	
 	private void handleColisions(){
-		for (Entity e1 : EntityContainer.getEntitiesCollide()){
-			float size1 = (e1.getWidth() < e1.getHeight()) ? e1.getWidth() : e1.getHeight();
-			for (Entity e2 : EntityContainer.getEntitiesCollide()){
-				float size2 = (e2.getWidth() < e2.getHeight()) ? e2.getWidth() : e2.getHeight();
-				if (e1.getCenter().distanceSquared(e2.getCenter()) < size1*size1 + size2*size2){
-					if (e1.getClass() != e2.getClass() && e1 != e2) {
-						((CColidable) e1.getComponent("Colidable")).colide();
-					}
-				}
-			}
-		}
+//		for (Entity e1 : EntityContainer.getEntitiesCollide()){
+//			float size1 = (e1.getWidth() < e1.getHeight()) ? e1.getWidth() : e1.getHeight();
+//			for (Entity e2 : EntityContainer.getEntitiesCollide()){
+//				float size2 = (e2.getWidth() < e2.getHeight()) ? e2.getWidth() : e2.getHeight();
+//				if (e1.getCenter().distanceSquared(e2.getCenter()) < size1*size1 + size2*size2){
+//					if (e1.getClass() != e2.getClass() && e1 != e2) {
+//						((CColidable) e1.getComponent("Colidable")).colide();
+//					}
+//				}
+//			}
+//		}
+//		for (Entity e : EntityContainer.getEntitiesCollide()) {
+//			Body body = ((CJBox2D) e.getComponent("JBox2D")).getBody();
+//			if (body.getContactList() != null) body.getContactList().contact.getFixtureA().ge
+//		}
 	}
 
 }
